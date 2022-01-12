@@ -1,0 +1,25 @@
+Anatomy of a Java program
+-------------------------
+
+- The smallest bulding block of a Java program is the function. A function is a chunk of code that performs a specific task.
+
+	- I.e. Sending emails, unit conversion, etc...
+
+- Example function in Java:
+	
+void main() { // The void keyword means the program does not return anything
+	// Every Java program should have this main keyword
+	...
+}
+
+- Classes are things that store functions, each class contains related functions
+- A function in a class is called a method
+
+- Example:
+
+public class Main { // the public keyword means that the class can be accessed normally
+	// All classes are capitalized
+	public void main() { // Methods are lower case
+		...
+	}
+}
