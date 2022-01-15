@@ -1,0 +1,40 @@
+1.21
+----
+Anything inside double quotes is a string, not a char
+
+1.22
+----
+Anything with a decimal point is either a float type or a double type, it cannot be an integer
+
+1.23
+----
+sum is not given a type
+
+1.25
+----
+Once the variable is set as a specific type, you need to recast it to change the data type
+
+1.31
+----
+true
+
+1.32
+----
+true
+
+1.33
+----
+false
+
+1.34
+----
+true
+
+1.35
+----
+false
+
+1.36
+----
+You cannot compare a boolean value with a double
+

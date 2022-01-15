@@ -1,6 +1,14 @@
 public class HelloWorld {
     public static void main(String[] args) {
-        System.out.println(90);
+        // System.out.println(90);
+        Tools.say("Hello!");
+        Tools.say("Hello again!", 7);
+        String[] msgs;
+        msgs = new String[3];
+        msgs[0] = "Ma";
+        msgs[1] = "Na";
+        msgs[2] = "Jo";
+        Tools.say(msgs);
     }
 }
 
