@@ -32,3 +32,38 @@
 // 3. Programming 
 // 4. Quality assurance
 // 5. Project management
+
+// Two classes are coupled if they are dependant on eachother 
+// Class coupling is discouraged in Java
+
+// Classes vs Objects
+// Objects only exist during run time
+// Objects are "examples" of classes
+
+// Example:
+// In the case of a chess game application there can be a class which describes the 
+// properties and behaviors that are common to all the Pieces
+
+// During the execution of the program, there will be many "instances" created
+// black king, white queen, etc 
+
+// > ChessPiece whiteQueen = new ChessPiece("queen", "white", "B3"); 
+// ^ instantiating the ChessPiece class
+// whiteQueen is a reference variable to a ChessPiece object
+
+// classses ALWAYS start with a capital letter 
+
+// Example: MyInteger
+
+// Instance Variables
+// The class lists all the variables that each object must have in order to model 
+// the given concept
+// When a variable is declared to be an instance variable, it means that all the
+// instances of the class will reserve space for the variable
+
+// Example:
+// > public class Point {
+    // int x = 0;
+// }
+
+// Continued next lecture...
