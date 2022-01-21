@@ -19,7 +19,7 @@ public class ParkingLot {
 	/**
 	 * Instance variable for storing the number of rows in a parking lot
 	 */
-	private int numRows;
+	private int numRows; 
 
 	/**
 	 * Instance variable for storing the number of spaces per row in a parking lot
@@ -121,28 +121,53 @@ public class ParkingLot {
 		return -1; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD		
 	}
 
-	private int[] calculateLotDimensions(String strFilename) throws Exception {
-		// TODO: Fix Me!!
+	private int countChars(String searchStr, char key) {
+		int counter = 0;
+
+		for (char c : searchStr.toCharArray()) {
+			if (key == c) {
+				counter++;
+			}
+		}
+
+		return counter;
+	}
+
+	private void calculateLotDimensions(String strFilename) throws Exception {
+		// PRECONDITION: only trimmed inf files will be processed correctly
 
 		Scanner scanner = new Scanner(new File(strFilename));
 
-		int rows;
-		int spotsPerRow;
+		int counter = 0;
 
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			rows = str.length();
-			for (int i = 0; i < str.length(); i++) {
-				spotsPerRow++;
+
+			if (counter == 0) {
+				int numOfCommas = countChars(str, ',');
+				int numOfSpace = countChars(str, ' ');
+				numRows = str.length() - numOfCommas - numOfSpace;
+			}
+
+			char firstChar;
+			if (str.toCharArray().length > 0) {
+				firstChar = str.toCharArray()[0];
+			} else {
+				firstChar = '0';
+			}
+
+			if (firstChar == 'S' || firstChar == 'N' 
+			|| firstChar == 'R' || firstChar == 'L' ||
+			firstChar == 'E') { // TODO: Clean Me!
+				counter++;
 			}
 		}
+
+		numSpotsPerRow = counter;
+		
 		scanner.close();
-
-		int[] dim = {rows, spotsPerRow};
-
-		return dim;
 	}
-
+	
 	private void populateFromFile(String strFilename) throws Exception {
 
 		Scanner scanner = new Scanner(new File(strFilename));
@@ -220,12 +245,12 @@ public class ParkingLot {
 		String strFilename = scanner.nextLine();
 
 		ParkingLot lot = new ParkingLot(strFilename);
+		
+		// System.out.println("Total number of parkable spots (capacity): " + lot.getTotalCapacity());
 
-		System.out.println("Total number of parkable spots (capacity): " + lot.getTotalCapacity());
+		// System.out.println("Number of cars currently parked in the lot: " + lot.getTotalOccupancy());
 
-		System.out.println("Number of cars currently parked in the lot: " + lot.getTotalOccupancy());
-
-		System.out.print(lot);
+		// System.out.print(lot);
 
 	}
 }

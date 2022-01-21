@@ -16,10 +16,9 @@ public class StudentInfo {
     public static void display() {
 
         System.out.println("************************************************************");
-        System.out.println("*                                                          *");
-        System.out.println("*                                                          *");
-        System.out.println("*                                                          *");
-        System.out.println("*                                                          *");
+        System.out.println("* Name: Gabriel Braden                                     *");
+        System.out.println("* Student ID: 300154707                                    *");
+        System.out.println("* Section B                                                *");
         System.out.println("************************************************************");
         System.out.println();
 

@@ -1,5 +1,7 @@
 public class Q3_ArrayInsertionDemo{
-
+    
+    /* method that inserts a given value into a new array at a specified postion,
+    then returns the new array */
 	public static int[] insertIntoArray(int[] beforeArray, int indexToInsert, int valueToInsert){
 		int[] rtnArr;
         rtnArr = new int[beforeArray.length + 1];

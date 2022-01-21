@@ -1,0 +1,18 @@
+There have been a number of queries as to what you are allowed and not allowed to do when doing an assignment. For your convenience, I have summarized below all the guidelines (including the ones already explicitly noted in the assignment description). The same guidelines apply to future assignments, unless stated otherwise.
+
+What you are allowed to do:
+You can alter the private methods as you wish. The templates provided for the private methods is meant at assisting you rather than to place constraints on your implementation.
+You can remove any given private methods and define your own private methods. This can go even as far as not having any private methods at all.
+You can define additional private variables if you find this absolutely necessary.
+The Java compiler imports the java.lang package by default. You can use any of the classes / methods in java.lang. 
+
+What you are not allowed to do:
+You cannot define new classes.
+You cannot change the signature of any of the public methods.
+You cannot add any new public methods.
+You cannot add any new public variables.
+You cannot import any classes or packages beyond the ones already imported in the starter code.
+You cannot modify the public methods that are already marked as complete int the provided starter code.
+You cannot structure your code into packages. All classes shall remain in the default package (i.e., there must be no package declaration in your Java classes).
+[EDITED Jan 17th to state that introducing packages is not allowed.]
+[EDITED Jan 17th to state that using the classes and methods in the default import (java.lang) is allowed.]

@@ -7,7 +7,8 @@ public class Q3_ReverseSortDemo {
 			System.out.print(unorderedLetters[i]);
 	}
 
-	//method that sorts a char array into its reverse alphabetical order
+	/* method that sorts a char array into its reverse alphabetical order using the
+	selection-sort algorithm */
 	public static void reverseSort(char[] values){
         int i, j, argMax;
         char tmp;

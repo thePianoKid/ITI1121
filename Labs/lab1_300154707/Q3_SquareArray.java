@@ -1,4 +1,6 @@
 public class Q3_SquareArray {
+	/* method that returns an array of specified size, containing the series of
+	squared indexes */
 	public static int[] createArray(int size) {
 		int[] rtnArr;
 		rtnArr = new int[size]; 

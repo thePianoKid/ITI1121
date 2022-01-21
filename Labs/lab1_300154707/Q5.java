@@ -30,6 +30,7 @@ public class Q5{
 		} else {
 			System.out.println("Not all tests are successful");
 		}
+
 	}
 
 	//method that determines if the number x is prime
@@ -38,8 +39,8 @@ public class Q5{
 		if(x < 1){
 			prime = false;
 		}
-		if(x == 1){
-			prime = true;
+		if(x== 1){
+			prime = false;
 		}
 		int i = 2;
 		while(prime && x > i){
@@ -52,22 +53,21 @@ public class Q5{
 	}
 
 	//returns the fibonacci number at the position in parameter
-	public static int getFibonacci(int position) {
+    public static int getFibonacci(int position) {
         
-		int num = 1;
-		int num2 = 1;
-		int fibonacci = 0;
+        int num = 1;
+        int num2 = 1;
+        int fibonacci = 0;
 
-		if (position == 0) {
-			num = 0;
-		} else {
-			for (int i = 1; i < position; i++) {
-				fibonacci = num + num2;
-				num = num2;
-				num2 = fibonacci;
-			}
-		}
-		return num;
-	}
-
+        if (position == 0) {
+            num = 0;
+        } else {
+            for (int i = 1; i < position; i++) {
+                fibonacci = num + num2;
+                num = num2;
+                num2 = fibonacci;
+            }
+        }
+        return num;
+    }
 }
