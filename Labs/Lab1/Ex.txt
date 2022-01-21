@@ -37,4 +37,3 @@ false
 1.36
 ----
 You cannot compare a boolean value with a double
-
