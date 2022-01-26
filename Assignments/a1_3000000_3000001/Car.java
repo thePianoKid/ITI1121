@@ -17,9 +17,7 @@ public class Car {
 	 * @return the type of this car
 	 */
 	public CarType getType() {
-		// WRITE YOUR CODE HERE!
-	
-		return null; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD
+		return this.type;
 	}
 
 	/**
@@ -28,15 +26,14 @@ public class Car {
 	 * @param type is the car type
 	 */
 	public void setType(CarType type) {
-		// WRITE YOUR CODE HERE!
+		this.type = type;
 	}
 
 	/**
 	 * @return the plate number
 	 */
 	public String getPlateNum() {
-		// WRITE YOUR CODE HERE!
-		return null; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD
+		return this.plateNum;
 	}
 
 	/**
@@ -45,7 +42,7 @@ public class Car {
 	 * @param plateNum is the car plate number
 	 */
 	public void setPlateNum(String plateNum) {
-	// WRITE YOUR CODE HERE!
+		this.plateNum = plateNum;
 	}
 
 	/**
@@ -55,7 +52,8 @@ public class Car {
 	 * @param plateNum is the car plate number
 	 */
 	public Car(CarType type, String plateNum) {
-	// WRITE YOUR CODE HERE!
+		setType(type);
+		setPlateNum(plateNum);
 	}
 
 	/**

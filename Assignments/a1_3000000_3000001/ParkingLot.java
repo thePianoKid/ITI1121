@@ -55,7 +55,10 @@ public class ParkingLot {
 		calculateLotDimensions(strFilename);
 
 		// instantiate the lotDesign and occupancy variables!
-		// WRITE YOUR CODE HERE!
+		System.out.println("number of rows: "+numRows);
+		System.out.println("num of spots per row: "+numSpotsPerRow);
+		lotDesign = new CarType[numRows][numSpotsPerRow];
+		occupancy = new Car[numRows][numSpotsPerRow];
 
 		// populate lotDesign and occupancy; you can do so by
 		// writing your own code or alternatively completing the 
@@ -121,16 +124,26 @@ public class ParkingLot {
 		return -1; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD		
 	}
 
+	// ----------------------- Helper Methods -----------------------
 	private int countChars(String searchStr, char key) {
 		int counter = 0;
 
 		for (char c : searchStr.toCharArray()) {
-			if (key == c) {
+			if (key == c) { // TODO: Replace w/ .equals() method
 				counter++;
 			}
 		}
 
 		return counter;
+	}
+
+	private int indexChars(String searchStr, char key, int startIndex) {
+		for (int i = 0; i < searchStr.toCharArray().length; i++) {
+			if (key == searchStr.toCharArray()[i]) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private void calculateLotDimensions(String strFilename) throws Exception {
@@ -146,7 +159,7 @@ public class ParkingLot {
 			if (counter == 0) {
 				int numOfCommas = countChars(str, ',');
 				int numOfSpace = countChars(str, ' ');
-				numRows = str.length() - numOfCommas - numOfSpace;
+				numSpotsPerRow = str.length() - numOfCommas - numOfSpace;
 			}
 
 			char firstChar;
@@ -159,11 +172,12 @@ public class ParkingLot {
 			if (firstChar == 'S' || firstChar == 'N' 
 			|| firstChar == 'R' || firstChar == 'L' ||
 			firstChar == 'E') { // TODO: Clean Me!
+			// TODO: Replace w/ .equals() method
 				counter++;
 			}
 		}
 
-		numSpotsPerRow = counter;
+		numRows = counter;
 		
 		scanner.close();
 	}
@@ -173,17 +187,47 @@ public class ParkingLot {
 		Scanner scanner = new Scanner(new File(strFilename));
 
 		// YOU MAY NEED TO DEFINE SOME LOCAL VARIABLES HERE!
+		int rowNum = 0;
+		int colNum;
+		boolean enterSubSection = false;
 
 		// while loop for reading the lot design
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			// WRITE YOUR CODE HERE!
+
+			if (str.equals("###")) {
+				break;
+			}
+
+			colNum = 0;
+
+			for (char ch : str.toCharArray()) {
+				if (ch == 'E'){
+					lotDesign[rowNum][colNum] = CarType.ELECTRIC;
+				} else if (ch == 'S') {
+					lotDesign[rowNum][colNum] = CarType.SMALL;
+				} else if (ch == 'R') {
+					lotDesign[rowNum][colNum] = CarType.REGULAR;
+				} else if (ch == 'L') {
+					lotDesign[rowNum][colNum] = CarType.LARGE;
+				} else if (ch == 'N') {
+					lotDesign[rowNum][colNum] = CarType.NA;
+				} else {
+					colNum--;
+				}
+				colNum++;
+			}
+			rowNum++;
 		}
 
 		// while loop for reading occupancy data
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			// WRITE YOUR CODE HERE!
+			if (str.equals("###")) {
+				enterSubSection = true;
+			} else if (enterSubSection == true) {
+				// TODO: set occupancy data
+			}
 		}
 
 		scanner.close();
@@ -245,7 +289,7 @@ public class ParkingLot {
 		String strFilename = scanner.nextLine();
 
 		ParkingLot lot = new ParkingLot(strFilename);
-		
+
 		// System.out.println("Total number of parkable spots (capacity): " + lot.getTotalCapacity());
 
 		// System.out.println("Number of cars currently parked in the lot: " + lot.getTotalOccupancy());
