@@ -137,15 +137,57 @@ public class ParkingLot {
 		return counter;
 	}
 
-	private int indexChars(String searchStr, char key, int startIndex) {
-		for (int i = 0; i < searchStr.toCharArray().length; i++) {
-			if (key == searchStr.toCharArray()[i]) {
-				return i;
+	private String[] parseCarOccupancy(String line) {
+		String[] rtnArr = new String[4];
+		String placeholder = "";
+		int placeholderIndex = 0;
+
+		for (char ch : line.toCharArray()) {
+			if (ch == line.toCharArray()[line.toCharArray().length - 1]) {
+				rtnArr[placeholderIndex] = placeholder + ch;
+			}
+			else if (ch == ',') { 
+				rtnArr[placeholderIndex] = placeholder;
+				placeholder = "";
+				placeholderIndex++;
+			} else if (ch != ' ') {
+				placeholder += ch;
 			}
 		}
-		return -1;
+
+		return rtnArr;
 	}
 
+	private CarType convertCarType(char carType) {
+		if (carType == 'E'){
+			return CarType.ELECTRIC;
+		} else if (carType == 'S') {
+			return CarType.SMALL;
+		} else if (carType == 'R') {
+			return CarType.REGULAR;
+		} else if (carType == 'L') {
+			return CarType.LARGE;
+		} else if (carType == 'N') {
+			return CarType.NA;
+		}
+
+		return null;
+	}
+
+	private static int convertStrToInt(String str)
+    {
+        int val = 0;
+  
+        // Convert the String
+        try {
+            val = Integer.parseInt(str);
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Error in convertStrToInt: Invalid String");
+        }
+        return val;
+    }
+	
 	private void calculateLotDimensions(String strFilename) throws Exception {
 		// PRECONDITION: only trimmed inf files will be processed correctly
 
@@ -189,7 +231,6 @@ public class ParkingLot {
 		// YOU MAY NEED TO DEFINE SOME LOCAL VARIABLES HERE!
 		int rowNum = 0;
 		int colNum;
-		boolean enterSubSection = false;
 
 		// while loop for reading the lot design
 		while (scanner.hasNext()) {
@@ -202,20 +243,10 @@ public class ParkingLot {
 			colNum = 0;
 
 			for (char ch : str.toCharArray()) {
-				if (ch == 'E'){
-					lotDesign[rowNum][colNum] = CarType.ELECTRIC;
-				} else if (ch == 'S') {
-					lotDesign[rowNum][colNum] = CarType.SMALL;
-				} else if (ch == 'R') {
-					lotDesign[rowNum][colNum] = CarType.REGULAR;
-				} else if (ch == 'L') {
-					lotDesign[rowNum][colNum] = CarType.LARGE;
-				} else if (ch == 'N') {
-					lotDesign[rowNum][colNum] = CarType.NA;
-				} else {
-					colNum--;
+				if (ch == 'E' || ch == 'S' || ch == 'R' || ch == 'L' || ch == 'N') {
+					lotDesign[rowNum][colNum] = convertCarType(ch);
+					colNum++;
 				}
-				colNum++;
 			}
 			rowNum++;
 		}
@@ -223,10 +254,17 @@ public class ParkingLot {
 		// while loop for reading occupancy data
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			if (str.equals("###")) {
-				enterSubSection = true;
-			} else if (enterSubSection == true) {
-				// TODO: set occupancy data
+			if (str.toCharArray().length > 1) {
+				String[] lineInfo = parseCarOccupancy(str);
+				Car car = new Car(convertCarType(lineInfo[2].toCharArray()[0]), lineInfo[3]);
+				occupancy[convertStrToInt(lineInfo[0])][convertStrToInt(lineInfo[1])] = car;
+			}
+		}
+
+		for (Car[] ocArr : occupancy) {
+			System.out.println();
+			for (Car oc : ocArr) {
+				System.out.print(oc+" ");
 			}
 		}
 
