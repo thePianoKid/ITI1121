@@ -21,8 +21,10 @@ public class Combination {
     // simply return false.
 
     public boolean equals( Combination other ) {
-        if (this.first == other.first && this.second == other.second && this.third == other.third) {
-            return true;
+        if (this != null && other != null) {
+            return (this.first == other.first 
+            && this.second == other.second 
+            && this.third == other.third);
         } else {
             return false;
         }
