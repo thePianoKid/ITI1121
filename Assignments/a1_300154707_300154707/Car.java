@@ -52,8 +52,8 @@ public class Car {
 	 * @param plateNum is the car plate number
 	 */
 	public Car(CarType type, String plateNum) {
-		setType(type);
-		setPlateNum(plateNum);
+		this.type = type;
+		this.plateNum = plateNum;
 	}
 
 	/**
