@@ -20,7 +20,7 @@ public class Circle extends Shape {
     }
 
     public double area() {
-        return 0;
+        return this.radius * this.radius * Math.PI;
     }
 
     public String toString() {
