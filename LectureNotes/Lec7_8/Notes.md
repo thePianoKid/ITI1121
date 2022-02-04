@@ -80,3 +80,22 @@ public class Shape {
     // ...
 }
 ```
+
+We can use parent classes to generalze various subclasses
+
+Example:
+
+```java
+Shape[] array = new Shape[2];
+
+array[0] = new Circle(5,5,15);
+array[1] = new Rectangle(5, 10, 2, 3);
+
+// The array can store all kind of Shapes without compiler errors
+```
+
+### Interfaces
+
+Interfaces are like abstract class with ONLY abstract classes and constants
+
+### Interfaces vs Abstract Classes
