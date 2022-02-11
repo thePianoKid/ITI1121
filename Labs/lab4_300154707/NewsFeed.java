@@ -9,13 +9,27 @@ public class NewsFeed {
     private int size;
     public static final int MAX_SIZE = 25;
 
+	// ------------------------- Helper Methods -------------------------
+	private int measureSizeOfMessage(Post[] messages) {
+		int arrSize = 0;
+
+		for(int i = 0; i < messages.length; i++) {
+			if (messages[i] != null) {
+				arrSize++;
+			}
+		}
+
+		return arrSize;
+	}
+
     public NewsFeed() {
-    	size = 0;
+    	this.size = 0;
+		this.messages = new Post[MAX_SIZE];
     }
 
     public void add(Post message) {
-      if (size < 25) {
-		messages[size] = message;
+      if (size() < MAX_SIZE) {
+		this.messages[size()] = message;
 	  }
     }
 
@@ -24,14 +38,7 @@ public class NewsFeed {
     }
 
     public int size() {
-		size = 0;
-
-		for(int i = 0; i < messages.length; i++) {
-			if (messages[i] != null) {
-				size++;
-			}
-		}
-
+		size = measureSizeOfMessage(messages);
 		return size;
     }
 
@@ -54,11 +61,32 @@ public class NewsFeed {
 	}
 
   	public NewsFeed getPhotoPost(){
-		// Your code here
+		NewsFeed rtnFeed = new NewsFeed();
+
+		for (Post p : messages) {
+			if (p != null) {
+				if (p.getClass() == PhotoPost.class) {
+					rtnFeed.add(p);
+				}
+			}
+		}
+		
+		return rtnFeed;
   	}
 
   	public NewsFeed plus(NewsFeed other){
-		// Your code here
-  	}
+		NewsFeed rtnFeed = new NewsFeed();
 
+		if ((this.size + other.size) <= MAX_SIZE) {
+			for (Post p : this.messages) {
+				rtnFeed.add(p);
+			}
+
+			for (Post p : other.messages) {
+				rtnFeed.add(p);
+			}
+		} 
+
+		return rtnFeed;
+  	}
 }

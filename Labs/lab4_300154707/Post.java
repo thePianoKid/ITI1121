@@ -9,6 +9,7 @@ public class Post implements Likeable, Comparable<Post> {
 
     public Post(String userName) {
       timeStamp = Calendar.getInstance().getTime();
+      this.userName = userName;
     }
 
     public String getUserName() {
