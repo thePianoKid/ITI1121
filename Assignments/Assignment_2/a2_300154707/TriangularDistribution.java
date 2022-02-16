@@ -24,9 +24,14 @@ public class TriangularDistribution {
 	 * @param b is the upper limit of the distribution
 	 */
 	public TriangularDistribution(int a, int c, int b) {
-	
-		// WRITE YOUR CODE HERE!
-
+		if (a < c && c < b) {
+			this.a = a;
+			this.b = b;
+			this.c = c;
+		} else {
+			System.out.println("Error: you silly munchkin, the precondition \"a < c AND c < b\" has not been met.");
+			System.out.println("As a result, the instance variables have not been initialized.");
+		}
 	}
 
 	/**
@@ -34,10 +39,21 @@ public class TriangularDistribution {
 	 * @return the probability density at point x
 	 */
 	public Rational pdf(int x) {
+		int numerator = 0;
+		int denominator = 1;
 
-		// WRITE YOUR CODE HERE!
+		if (a <= x && x < c) {
+			numerator = 2*(x-a);
+			denominator = (b-a)*(c-a);
+		} else if (x == c) {
+			numerator = 2;
+			denominator = b-a;
+		} else if (c < x && x <= b) {
+			numerator = 2*(b-x);
+			denominator = (b-a)*(b-c);
+		}
 
-		return null; // Remove this statement when your implementation is complete.
+		return new Rational(numerator, denominator); 
 	}
 
 	/**
