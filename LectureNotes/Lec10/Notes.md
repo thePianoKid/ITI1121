@@ -26,3 +26,5 @@ The `push` method is like if you added a book onto the pile.
 The `pop` method is like if you removed the book and read its contents.
 
 And you can check if the pile is non-existant using the `empty` method.
+
+To implement dynamic arrays in Java, you have to copy all the elements into a new array that has a bigger size. 

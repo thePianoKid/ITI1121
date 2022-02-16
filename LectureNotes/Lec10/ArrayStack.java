@@ -1,9 +1,10 @@
-public class ArrayStack implements Stack{
-    private Object[] elems; // used to store the elements
+public class ArrayStack <E> implements Stack <E>{
+    private E[] elems; // used to store the elements
     private int top; // designates the first free cell (first integer is zero)
 
+    @SuppressWarnings("unchecked")
     public ArrayStack (int capacity) {
-        this.elems = new Object[capacity];
+        this.elems = (E[]) new Object[capacity];
         this.top = 0;
     }
 
@@ -16,25 +17,26 @@ public class ArrayStack implements Stack{
         return elems.length <= top;
     }
 
-    public void push (Object o) {
+    public void push (E o) {
         // pre-condition: !isFull()
-        elems[top] = 0;
+        elems[top] = o;
         top++;
     }
 
-    public Object pop() {
+    public E pop() {
         // pre-condition: !isEmpty()
-        Object saved;
+        E saved;
         
         top--;
         saved = elems[top];
-        // TODO: scrub memory
-        elems[top] = null;
+        // the top value is removed and marked for garbage collection
+        // called "scrubbing"
+        elems[top] = null; 
         
         return saved;
     }
 
-    public Object peek() {
+    public E peek() {
         // pre-condition: !isEmpty()
         return elems[top - 1];
     }

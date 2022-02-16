@@ -1,6 +1,6 @@
-public interface Stack {
+public interface Stack <T> {
     boolean isEmpty();
-    void push(Object o);
-    Object pop();
-    Object peek();
+    void push(T o);
+    T pop();
+    T peek();
 }
