@@ -77,14 +77,14 @@ public class Simulator {
 		// All you need to do is to convert this hourly rate into 
 		// a per-second rate (probability).
 		
-		//this.probabilityOfArrivalPerSec = new Rational(?, ?);
+		// Convert hourly arrival rate to an arrival rate in terms of seconds
+		this.probabilityOfArrivalPerSec = new Rational(perHourArrivalRate, 3600);
 
 		
 		// Finally, you need to initialize the incoming and outgoing queues
 
-		// incomingQueue = new ...
-		// outgoingQueue = new ...
-
+		incomingQueue = new LinkedQueue<Spot>();
+		outgoingQueue = new LinkedQueue<Spot>();
 	}
 
 	/**
@@ -95,14 +95,51 @@ public class Simulator {
 	public void simulate() {
 	
 		// Local variables can be defined here.
+		Spot dequeuedSpot = null;
+		int parkDuration;
+		boolean wasParked;
 
 		this.clock = 0;
 		// Note that for the specific purposes of A2, clock could have been 
 		// defined as a local variable too.
 
 		while (clock < steps) {
-	
-			// WRITE YOUR CODE HERE!
+			boolean hasArrived = RandomGenerator.eventOccurred(probabilityOfArrivalPerSec);
+			
+			if (hasArrived) {
+				Car randCar = RandomGenerator.generateRandomCar();
+				Spot randSpot = new Spot(randCar, clock);
+				incomingQueue.enqueue(randSpot);
+			}
+
+			for (int i = 0; i < lot.getNumRows(); i++) {
+				for (int j = 0; j < lot.getNumSpotsPerRow(); j++) { 
+					if (lot.getSpotAt(i, j) != null) {
+						parkDuration = clock - lot.getSpotAt(i, j).getTimestamp(); 
+						Rational probDeparture = departurePDF.pdf(parkDuration);
+						// TODO: Check if this is the correct interpretation of the algo
+						boolean willDepart = RandomGenerator.eventOccurred(probDeparture) || parkDuration == MAX_PARKING_DURATION;
+						if (willDepart) {
+							Spot removedSpot = lot.remove(i, j);
+							outgoingQueue.enqueue(removedSpot);
+						} 
+					}
+				}
+			}
+
+			if (!incomingQueue.isEmpty()) {
+				if (dequeuedSpot == null) {
+					dequeuedSpot = incomingQueue.dequeue();	
+				}
+				wasParked = lot.attemptParking(dequeuedSpot.getCar(), clock);
+				if (wasParked) {
+					dequeuedSpot = null;
+				}
+			}
+
+			if (!outgoingQueue.isEmpty()) {
+				outgoingQueue.dequeue();
+			}
 
 			clock++;
 		}
