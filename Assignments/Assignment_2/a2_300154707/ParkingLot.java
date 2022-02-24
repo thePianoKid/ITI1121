@@ -112,8 +112,6 @@ public class ParkingLot {
 	 * Checks whether a car (which has a certain type) is allowed to park at
 	 * location (i, j)
 	 *
-	 * NOTE: This method is complete; you do not need to change it.
-	 * 
 	 * @param i is the parking row index
 	 * @param j is the index of the spot within row i
 	 * @return true if car c can park at (i, j) and false otherwise
@@ -159,10 +157,16 @@ public class ParkingLot {
 	 * @return true if c is successfully parked somwhere in the lot, and false otherwise
 	 */
 	public boolean attemptParking(Car c, int timestamp) {
-
-		// WRITE YOUR CODE HERE!
+		for (int i = 0; i < occupancy.length; i++) {
+			for (int j = 0; j < occupancy[i].length; j++) {
+				if (canParkAt(i, j, c)) {
+					park(i, j, c, timestamp);
+					return true;
+				}
+			}
+		}
 		
-		return false; // Remove this statement when your implementation is complete.
+		return false;
 
 	}
 
