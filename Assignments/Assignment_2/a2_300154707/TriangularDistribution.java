@@ -26,11 +26,14 @@ public class TriangularDistribution {
 	public TriangularDistribution(int a, int c, int b) {
 		if (a < c && c < b) {
 			this.a = a;
-			this.b = b;
 			this.c = c;
+			this.b = b;
 		} else {
 			System.out.println("Error: you silly munchkin, the precondition \"a < c AND c < b\" has not been met.");
-			System.out.println("As a result, the instance variables have not been initialized.");
+			System.out.println("As a result, the instance variables have defaulted to a = 0, c = 50 and b = 100.");
+			this.a = 0;
+			this.c = 50;
+			this.b = 100;
 		}
 	}
 
