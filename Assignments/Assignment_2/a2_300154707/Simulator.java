@@ -133,12 +133,16 @@ public class Simulator {
 				}
 				wasParked = lot.attemptParking(dequeuedSpot.getCar(), clock);
 				if (wasParked) {
+					System.out.println(dequeuedSpot.getCar() + " ENTERED at timestamp " + clock + 
+					"; occupancy is at " + lot.getTotalCapacity());
 					dequeuedSpot = null;
 				}
 			}
 
 			if (!outgoingQueue.isEmpty()) {
-				outgoingQueue.dequeue();
+				Spot outgoingCar = outgoingQueue.dequeue();
+				System.out.println(outgoingCar + " EXITED at timestamp " + clock + "; occupancy is at " 
+				+ lot.getTotalCapacity());
 			}
 
 			clock++;
