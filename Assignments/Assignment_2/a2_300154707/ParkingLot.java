@@ -48,6 +48,8 @@ public class ParkingLot {
 		lotDesign = new CarType[numRows][numSpotsPerRow];
 
 		occupancy = new Spot[numRows][numSpotsPerRow];
+
+		populateDesignFromFile(strFilename);
 	}
 
 	public int getNumRows() {
@@ -67,11 +69,6 @@ public class ParkingLot {
 	 * @param timestamp is the (simulated) time when the car gets parked in the lot
 	 */
 	public void park(int i, int j, Car c, int timestamp) {
-		if (!canParkAt(i, j, c)) {
-			System.out.println("Car " + c + " cannot be parked at (" + i + "," + j + ")");
-			return;
-		}
-
 		Spot s = new Spot(c, timestamp);
 		occupancy[i][j] = s;
 	}
@@ -128,7 +125,7 @@ public class ParkingLot {
 
 		CarType carType = c.getType();
 		CarType spotType = lotDesign[i][j];
-
+		
 		if (carType == CarType.ELECTRIC) {
 			return (spotType == CarType.ELECTRIC) || (spotType == CarType.SMALL) || (spotType == CarType.REGULAR)
 					|| (spotType == CarType.LARGE);
@@ -166,7 +163,7 @@ public class ParkingLot {
 			}
 		}
 		
-		return false;
+		return false; 
 
 	}
 
@@ -177,10 +174,13 @@ public class ParkingLot {
 	public int getTotalCapacity() {
 		int count = 0;
 
-		for (int i = 0; i < numRows; i++)
-			for (int j = 0; j < numSpotsPerRow; j++)
-				if (lotDesign[i][j] != CarType.NA)
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numSpotsPerRow; j++) {
+				if (lotDesign[i][j] != CarType.NA) {
 					count++;
+				}
+			}
+		}
 
 		return count;
 	}
@@ -235,37 +235,6 @@ public class ParkingLot {
 				String[] tokens = str.split(",");
 				for (int i = 0; i < tokens.length; i++)
 					lotDesign[rowNumber][i] = Util.getCarTypeByLabel(tokens[i].trim());
-				rowNumber++;
-			}
-		}
-
-		rowNumber = 0;
-		// while loop for reading occupancy data
-		while (scanner.hasNext()) {
-			String str = scanner.nextLine().trim();
-			lineCount++;
-
-			if (str.isEmpty()) {
-				// Do nothing
-			} else {
-				String[] tokens = str.split(SEPARATOR);
-				if (tokens.length != 4 || !tokens[0].trim().matches("\\d+") || !tokens[1].trim().matches("\\d+")) {
-					System.out.println("Skipped line " + lineCount + " due to an error.");
-					continue;
-				}
-
-				int i = Integer.parseInt(tokens[0].trim());
-				int j = Integer.parseInt(tokens[1].trim());
-
-				if (Util.getCarTypeByLabel(tokens[2].trim()) == CarType.NA) {
-					System.out.println("Skipped line " + lineCount + " due to an error.");
-					continue;
-				}
-
-				Car c = new Car(Util.getCarTypeByLabel(tokens[2].trim()), tokens[3].trim());
-				// TODO: call parking method with correct timestamp
-				// int timestamp = ??;
-				// this.park(i, j, s, timestamp);
 				rowNumber++;
 			}
 		}
