@@ -155,6 +155,7 @@ public class ParkingLot {
 	 */
 	public boolean attemptParking(Car c, int timestamp) {
 		int currentOptScore;
+		// Default value are set, these values stay constant only if a parking spot is not found
 		boolean result = false;
 		int optRow = -1;
 		int optRowSpot = -1;
