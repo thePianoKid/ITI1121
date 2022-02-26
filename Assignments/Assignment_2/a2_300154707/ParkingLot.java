@@ -144,7 +144,7 @@ public class ParkingLot {
 
 	/**
 	 * Attempts to park a car in the lot. Parking is successful if a suitable parking spot
-	 * is available in the lot. If some suitable spot is found (anywhere in the lot), the car
+	 * is available in the lot. If some suitable spot is found (the most optimal spot is always found), the car
 	 * is parked at that spot with the indicated timestamp and the method returns "true".
 	 * If no suitable spot is found, no parking action is taken and the method simply returns
 	 * "false"
@@ -154,17 +154,32 @@ public class ParkingLot {
 	 * @return true if c is successfully parked somwhere in the lot, and false otherwise
 	 */
 	public boolean attemptParking(Car c, int timestamp) {
+		int currentOptScore;
+		boolean result = false;
+		int optRow = -1;
+		int optRowSpot = -1;
+		int bestOptScore = -10;
+
 		for (int i = 0; i < occupancy.length; i++) {
 			for (int j = 0; j < occupancy[i].length; j++) {
 				if (canParkAt(i, j, c)) {
-					park(i, j, c, timestamp);
-					return true;
+					// park(i, j, c, timestamp);
+					result = true;
+					currentOptScore = parkingOptimizationScore(c.getType(), lotDesign[i][j]);
+					if (currentOptScore > bestOptScore) {
+						optRow = i;
+						optRowSpot = j;
+						bestOptScore = currentOptScore;
+					}
 				}
 			}
 		}
-		
-		return false; 
 
+		if (result) {
+			park(optRow, optRowSpot, c, timestamp);
+		}
+		
+		return result; 
 	}
 
 	/**
@@ -240,6 +255,29 @@ public class ParkingLot {
 		}
 
 		scanner.close();
+	}
+
+	private int parkingOptimizationScore(CarType carToPark, CarType spotType) {
+		CarType[] carOrder = {CarType.LARGE, CarType.REGULAR, CarType.SMALL, CarType.ELECTRIC};
+		int score = 0;
+
+		for (int i = 0; i < carOrder.length; i++) {
+			if (carOrder[i].equals(carToPark)) {
+				break;
+			} else {
+				score -= 1;
+			}
+		}
+
+		for (int i = 0; i < carOrder.length; i++) {
+			if (carOrder[i].equals(spotType)) {
+				break;
+			} else {
+				score++;
+			}
+		}
+
+		return score;
 	}
 
 	/**
