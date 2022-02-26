@@ -117,8 +117,13 @@ public class Simulator {
 					if (lot.getSpotAt(i, j) != null) {
 						parkDuration = clock - lot.getSpotAt(i, j).getTimestamp(); 
 						Rational probDeparture = departurePDF.pdf(parkDuration);
-						// TODO: Check if this is the correct interpretation of the algo
-						boolean willDepart = RandomGenerator.eventOccurred(probDeparture) || parkDuration == MAX_PARKING_DURATION;
+						
+						// This is a departure from the given simulation algo,
+						// but it accomplishes the same task. I.e. removing the 
+						// car if duration == 8h or if the random generator determines
+						// that the car must leave
+						boolean willDepart = RandomGenerator.eventOccurred(probDeparture) 
+						|| parkDuration == MAX_PARKING_DURATION;
 						if (willDepart) {
 							Spot removedSpot = lot.remove(i, j);
 							outgoingQueue.enqueue(removedSpot);
