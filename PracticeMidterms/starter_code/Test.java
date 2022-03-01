@@ -1,9 +1,11 @@
 public class Test {
     public static void main(String[] args) {
-        A testVar = new A(10, 8, 7);
+        UniquifiableArrayStack<String> stringStack = new UniquifiableArrayStack<String>();
 
-        DeepCopyable deepCopy = testVar.deepCopy();
+        stringStack.push("Cole");
 
-        A newVar = (A) deepCopy;
+        ArrayStack<String> dulplicateStack = stringStack;
+
+        stringStack.uniquify();
     }
 }
