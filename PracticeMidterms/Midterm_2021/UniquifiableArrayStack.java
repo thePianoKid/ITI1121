@@ -7,32 +7,32 @@
 
 public class UniquifiableArrayStack<E> extends ArrayStack<E> {
 	public Stack<E> uniquify() {
-		Stack<E> uniqueStackRev = new ArrayStack<E>();
-		Stack<E> copyStack= new ArrayStack<E>();
-
-		E compEle = this.pop();
-		copyStack.push(compEle);
-		uniqueStackRev.push(compEle);
+		Stack<E> reverseOutput = new ArrayStack<E>();
+		Stack<E> reverseStack = new ArrayStack<E>();
 
 		while (!this.isEmpty()) {
-			E current = this.pop();
-			copyStack.push(current);
-			if (!compEle.equals(current)) {
-				compEle = current;
-				uniqueStackRev.push(compEle);
+			E elem = this.pop();
+			reverseStack.push(elem);
+
+			if (reverseOutput.isEmpty()) {
+				reverseOutput.push(elem);
+			} else {
+				if (!reverseOutput.peek().equals(elem)) {
+					reverseOutput.push(elem);
+				}
 			}
 		}
 
-		Stack<E> uniqueStack = new ArrayStack<E>();
-
-		while (!uniqueStackRev.isEmpty()) {
-			uniqueStack.push(uniqueStackRev.pop());
+		while (!reverseStack.isEmpty()) {
+			this.push(reverseStack.pop());
 		}
 
-		while (!copyStack.isEmpty()) {
-			this.push(copyStack.pop());
+		Stack<E> output = new ArrayStack<E>();
+
+		while (!reverseOutput.isEmpty()) {
+			output.push(reverseOutput.pop());
 		}
 
-		return uniqueStack;
+		return output;
 	}
 }
