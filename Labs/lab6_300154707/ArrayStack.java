@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class ArrayStack<E> implements Stack<E> {
 
@@ -67,6 +68,10 @@ public class ArrayStack<E> implements Stack<E> {
     // Gets current capacity of the array (for testing purpose)
     public int getCapacity() {
         return elems.length;
+    }
+
+    public void printStack() {
+        System.out.println(Arrays.toString(elems));
     }
 
 
