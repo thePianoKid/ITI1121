@@ -6,13 +6,17 @@ public class DynamicArrayStack<E> implements Stack<E> {
 
     private E[] elems;  // Used to store the elements of this ArrayStack
     private int top;    // Designates the first free cell
-    private static final int DEFAULT_INC = 10;   //Used to store default increment / decrement
+    private static final int DEFAULT_INC = 25;   //Used to store default increment / decrement
 
     @SuppressWarnings( "unchecked" )
 
     // Constructor
     public DynamicArrayStack( int capacity ) {
-        elems = (E[]) new Object[capacity];
+        if (capacity != 0) {
+            elems = (E[]) new Object[capacity];
+        } else {
+            elems = (E[]) new Object[DEFAULT_INC];
+        }
         top = 0;
     }
 
