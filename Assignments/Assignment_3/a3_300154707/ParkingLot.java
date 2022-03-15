@@ -22,11 +22,13 @@ public class ParkingLot {
 	 * 
 	 * @param capacity is the (maximum) capacity of the lot
 	 */
-	public ParkingLot(int capacity) {
+	public ParkingLot(int capacity) throws IllegalArgumentException {
 
 		if (capacity < 0) {
-		
-			// Hint: throw a suitable exception here.
+			
+			// TODO: Check on Piazza if this is the correct exception to throw
+			throw new IllegalArgumentException("The ParkingLot class could not be" + 
+			"instantiated because the inputted capacity was negative.");
 		
 		}
 
