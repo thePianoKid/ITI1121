@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Dictionary implements Map<String, Integer> {
 
     private final static int INITIAL_CAPACITY = 10;

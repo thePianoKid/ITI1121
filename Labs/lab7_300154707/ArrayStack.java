@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.EmptyStackException;
 
 public class ArrayStack<E> implements Stack<E> {
 
@@ -35,6 +36,10 @@ public class ArrayStack<E> implements Stack<E> {
 
     public E peek() {
 
+        if (top == 0) {
+            throw new EmptyStackException();
+        }
+
         // pre-conditions: ! isEmpty()
 
         return elems[ top-1 ];
@@ -43,6 +48,10 @@ public class ArrayStack<E> implements Stack<E> {
     // Removes and returns the top element of this stack
 
     public E pop() {
+
+        if (top == 0) {
+            throw new EmptyStackException();
+        }
 
         // pre-conditions: ! isEmpty()
 
@@ -56,10 +65,14 @@ public class ArrayStack<E> implements Stack<E> {
 
     // Puts the element onto the top of this stack.
 
-    public void push( E element ) {
+    public void push( E element ) throws FullStackException {
 
         // Pre-condition: the stack is not full
         // *first* stores the element at position top, then increments top
+
+        if (top == elems.length) {
+            throw new FullStackException();
+        }
 
         elems[ top++ ] = element;
     }

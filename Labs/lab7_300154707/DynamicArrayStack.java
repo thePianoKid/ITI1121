@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.EmptyStackException;
 
 public class DynamicArrayStack<E> implements Stack<E> {
 
@@ -32,6 +33,9 @@ public class DynamicArrayStack<E> implements Stack<E> {
 
     // Returns the top element of this ArrayStack without removing it
     public E peek() {
+        if (top == 0) {
+            throw new EmptyStackException();
+        }
         return elems[ top-1 ];
     }
 
@@ -39,6 +43,10 @@ public class DynamicArrayStack<E> implements Stack<E> {
 
     // Removes and returns the top element of this stack
     public E pop() {
+        if (top == 0) {
+            throw new EmptyStackException();
+        }
+        
         if (DEFAULT_INC <= (elems.length - top)) {
             E[] tmp = (E[]) new Object[elems.length-DEFAULT_INC];
             
