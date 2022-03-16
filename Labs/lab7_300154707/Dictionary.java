@@ -1,3 +1,6 @@
+import java.util.NoSuchElementException;
+import java.util.concurrent.locks.AbstractQueuedLongSynchronizer.ConditionObject;
+
 public class Dictionary implements Map<String, Integer> {
 
     private final static int INITIAL_CAPACITY = 10;
@@ -21,6 +24,11 @@ public class Dictionary implements Map<String, Integer> {
 
     @Override
     public void put(String key, Integer value) {
+        if (key == null || value == null) {
+            throw new NullPointerException();
+        } else if (!contains(key)) {
+            throw new NoSuchElementException();
+        }
         if (count == elems.length) {
             increaseCapacity();
         }
@@ -39,6 +47,12 @@ public class Dictionary implements Map<String, Integer> {
 
     @Override
     public boolean contains(String key) {
+        if (key == null) {
+            throw new NullPointerException();
+        } else if (!contains(key)) {
+            throw new NoSuchElementException();
+        }
+
         for (int i = 0; i < elems.length; i++) {
             if (elems[i] != null) {
                 if (elems[i].getKey().equals(key)) {
@@ -52,6 +66,11 @@ public class Dictionary implements Map<String, Integer> {
 
     @Override
     public Integer get(String key) {
+        if (key == null) {
+            throw new NullPointerException();
+        } else if (!contains(key)) {
+            throw new NoSuchElementException();
+        }
         for (int i = elems.length-1; i >= 0; i--) {
             if (elems[i] != null) {
                 if (elems[i].getKey().equals(key)) {
@@ -65,6 +84,11 @@ public class Dictionary implements Map<String, Integer> {
 
     @Override
     public void replace(String key, Integer value) {
+        if (key == null | value == null) {
+            throw new NullPointerException();
+        } else if (!contains(key)) {
+            throw new NoSuchElementException();
+        }
         for (int i = elems.length-1; i >= 0; i--) {
             if (elems[i] != null) {
                 if (elems[i].getKey().equals(key)) {
@@ -76,6 +100,12 @@ public class Dictionary implements Map<String, Integer> {
 
     @Override
     public Integer remove(String key) {
+        if (key == null) {
+            throw new NullPointerException();
+        } else if (!contains(key)) {
+            throw new NoSuchElementException();
+        }
+
         int index = 0;
         int result = 0;
 
