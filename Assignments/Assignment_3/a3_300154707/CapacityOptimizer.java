@@ -4,9 +4,30 @@ public class CapacityOptimizer {
 	private static final double THRESHOLD = 5.0d;
 
 	public static int getOptimalNumberOfSpots(int hourlyRate) {
-	
-		throw new UnsupportedOperationException("This method has not been implemented yet!");
-	
+		boolean processComplete = false;
+		int totalIncomingQueueLen = 0;
+		int n = 1;
+		while (!processComplete) {
+			ParkingLot lot = new ParkingLot(n);
+			Simulator sim = new Simulator(lot, hourlyRate, 24*3600);
+
+			System.out.println(lot.toString());
+
+			for (int i = 0; i < NUM_RUNS; i++) {
+				sim.simulate();
+				totalIncomingQueueLen = sim.getIncomingQueueSize();
+			}
+
+			double avgIncomingQueueSize = totalIncomingQueueLen/NUM_RUNS;
+
+			if (avgIncomingQueueSize <= THRESHOLD) {
+				processComplete = true;
+			}
+
+			n++;
+		} 
+
+		return 0;
 	}
 
 	public static void main(String args[]) {
