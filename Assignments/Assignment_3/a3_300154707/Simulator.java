@@ -129,18 +129,18 @@ public class Simulator {
 					System.out.println(incomingToProcess.getCar() + " ENTERED at timestamp " + 
 					clock + "; occupancy is at "+ lot.getOccupancy());
 					incomingToProcess = null;
-				} else if (!incomingQueue.isEmpty()) {
-					incomingToProcess = incomingQueue.dequeue();
-				}
-
-				if (!outgoingQueue.isEmpty()) {
-					Spot leaving = outgoingQueue.dequeue();
-					System.out.println(leaving.getCar() + " EXITED at timestamp "
-					 + clock + "; occupancy is at " + lot.getOccupancy());
-				}
-
-				clock++;
+				} 
+			} else if (!incomingQueue.isEmpty()) {
+				incomingToProcess = incomingQueue.dequeue();
 			}
+			
+			if (!outgoingQueue.isEmpty()) {
+				Spot leaving = outgoingQueue.dequeue();
+				System.out.println(leaving.getCar() + " EXITED at timestamp "
+				 + clock + "; occupancy is at " + lot.getOccupancy());
+			}
+	
+			clock++;
 		}
 	}
 
