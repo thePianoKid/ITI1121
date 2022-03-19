@@ -70,10 +70,45 @@ public class Simulator {
 	 * @param steps is the total number of steps for simulation
 	 */
 	public Simulator(ParkingLot lot, int perHourArrivalRate, int steps) {
-	
-		throw new UnsupportedOperationException("This method has not been implemented yet!");
+		this.lot = lot;
+		this.probabilityOfArrivalPerSec = new Rational(perHourArrivalRate, NUM_SECONDS_IN_1H);
+		this.steps = steps;
+		this.clock = 0;
+		
+		incomingQueue = new LinkedQueue<Spot>();
+		outgoingQueue = new LinkedQueue<Spot>();
 	}
 
+	private void processArrival() {
+		boolean shouldAddNewCar = RandomGenerator.eventOccurred(probabilityOfArrivalPerSec);
+
+		if (shouldAddNewCar)
+			incomingQueue.enqueue(new Spot(new Car(RandomGenerator.generateRandomString(10)), clock));
+	}
+
+	private void processDeparture() {
+		for (int i = 0; i < lot.getOccupancy(); i++) {
+			Spot spot = lot.getSpotAt(i);
+
+			if (spot != null) {
+				int duration = clock - spot.getTimestamp();
+
+				boolean willLeave = false;
+
+				if (duration > 8 * NUM_SECONDS_IN_1H) {
+					willLeave = true;
+				} else {
+					willLeave = RandomGenerator.eventOccurred(departurePDF.pdf(duration));
+				}
+
+				if (willLeave) {
+					Spot toExit = lot.remove(i);
+					toExit.setTimestamp(clock);
+					outgoingQueue.enqueue(spot);
+				}
+			}
+		}
+	}
 
 	/**
 	 * Simulate the parking lot for the number of steps specified by the steps
@@ -81,14 +116,35 @@ public class Simulator {
 	 * NOTE: Make sure your implementation of simulate() uses peek() from the Queue interface.
 	 */
 	public void simulate() {
-	
-		throw new UnsupportedOperationException("This method has not been implemented yet!");
-	
+		Spot incomingToProcess = null;
+
+		while (clock < steps) {
+			processArrival();
+			processDeparture();
+
+			if (incomingToProcess != null) {
+				boolean isProcessed = lot.attemptParking(incomingToProcess.getCar(), clock);
+
+				if (isProcessed) {
+					System.out.println(incomingToProcess.getCar() + " ENTERED at timestamp " + 
+					clock + "; occupancy is at "+ lot.getOccupancy());
+					incomingToProcess = null;
+				} else if (!incomingQueue.isEmpty()) {
+					incomingToProcess = incomingQueue.dequeue();
+				}
+
+				if (!outgoingQueue.isEmpty()) {
+					Spot leaving = outgoingQueue.dequeue();
+					System.out.println(leaving.getCar() + " EXITED at timestamp "
+					 + clock + "; occupancy is at " + lot.getOccupancy());
+				}
+
+				clock++;
+			}
+		}
 	}
 
 	public int getIncomingQueueSize() {
-	
-		throw new UnsupportedOperationException("This method has not been implemented yet!");
-	
+		return incomingQueue.size();
 	}
 }
