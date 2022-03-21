@@ -70,6 +70,14 @@ public class Simulator {
 	 * @param steps is the total number of steps for simulation
 	 */
 	public Simulator(ParkingLot lot, int perHourArrivalRate, int steps) {
+		if (lot == null) {
+			throw new NullPointerException("ParkingLot parameter cannot be null.");
+		} else if (perHourArrivalRate < 0) {
+			throw new IndexOutOfBoundsException("perHourArrivalRate cannot be negative.");
+		} else if (steps < 0) {
+			throw new IndexOutOfBoundsException("steps cannot be negative.");
+		}
+
 		this.lot = lot;
 		this.steps = steps;
 		this.clock = 0;
