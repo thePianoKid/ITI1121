@@ -1,3 +1,5 @@
+import java.security.InvalidParameterException;
+
 /**
  * This class provides an implementation of a triangular probabilistic
  * distribution. A simple mathematical explanation of this probability
@@ -29,9 +31,7 @@ public class TriangularDistribution {
 			this.c = c;
 			this.b = b;
 		} else {
-		
-			// Hint: throw an appropriate exception here!
-	
+			throw new InvalidParameterException("The following must be true. a < c && c < b");
 		}
 	}
 
