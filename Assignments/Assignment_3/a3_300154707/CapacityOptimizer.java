@@ -5,29 +5,32 @@ public class CapacityOptimizer {
 
 	public static int getOptimalNumberOfSpots(int hourlyRate) {
 		boolean processComplete = false;
-		int totalIncomingQueueLen = 0;
 		int n = 1;
-		while (!processComplete) {
-			ParkingLot lot = new ParkingLot(n);
-			Simulator sim = new Simulator(lot, hourlyRate, 24*3600);
 
-			System.out.println(lot.toString());
+		while (!processComplete) {
+			System.out.println("=== Setting lot capacity to: " + n + " ===");
+			int totalIncomingQueueLen = 0;
 
 			for (int i = 0; i < NUM_RUNS; i++) {
+				ParkingLot lot = new ParkingLot(n);
+				Simulator sim = new Simulator(lot, hourlyRate, 24*3600);
 				sim.simulate();
-				totalIncomingQueueLen = sim.getIncomingQueueSize();
+				int incomingQueueLen = sim.getIncomingQueueSize();
+				System.out.println("Simulation run " + (i+1) + "; Queue" +
+				"length at the end of simulation run: " + incomingQueueLen);
+				totalIncomingQueueLen += incomingQueueLen;
 			}
 
 			double avgIncomingQueueSize = totalIncomingQueueLen/NUM_RUNS;
 
 			if (avgIncomingQueueSize <= THRESHOLD) {
 				processComplete = true;
+			} else {
+				n++;
 			}
-
-			n++;
 		} 
 
-		return 0;
+		return n;
 	}
 
 	public static void main(String args[]) {
