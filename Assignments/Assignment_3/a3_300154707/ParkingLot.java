@@ -25,11 +25,7 @@ public class ParkingLot {
 	public ParkingLot(int capacity) throws IllegalArgumentException {
 
 		if (capacity < 0) {
-			
-			// TODO: Check on Piazza if this is the correct exception to throw
-			throw new IllegalArgumentException("The ParkingLot class could not be" + 
-			"instantiated because the inputted capacity was negative.");
-		
+			throw new IllegalArgumentException("Capacity cannot be negative.");
 		}
 
 		this.capacity = capacity;
@@ -43,6 +39,12 @@ public class ParkingLot {
 	 * @param timestamp is the (simulated) time when the car gets parked in the lot
 	 */
 	public void park(Car c, int timestamp) {
+		if (c == null) {
+			throw new NullPointerException("The car parameter cannot be null.");
+		} else if (timestamp < 0) {
+			throw new IndexOutOfBoundsException("Timestamp cannot be negative.");
+		}
+
 		occupancy.add(new Spot(c, timestamp));
 	}
 
@@ -53,10 +55,22 @@ public class ParkingLot {
 	 * @return the car (spot) that has been removed
 	 */
 	public Spot remove(int i) {
+		if (i < 0) {
+			throw new IndexOutOfBoundsException("Index cannot be negative.");
+		} else if (occupancy.size() <= i) {
+			throw new IndexOutOfBoundsException("Index must be less than the occupancy list.");
+		}
+
 		return occupancy.remove(i);
 	}
 
 	public boolean attemptParking(Car c, int timestamp) {
+		if (c == null) {
+			throw new NullPointerException("The car parameter cannot be null.");
+		} else if (timestamp < 0) {
+			throw new IndexOutOfBoundsException("Timestamp cannot be negative.");
+		}
+
 		if (occupancy.size() < capacity) {
 			park(c, timestamp);
 			return true;
@@ -80,6 +94,12 @@ public class ParkingLot {
 	 * @return the spot instance at a given position (i, j)
 	 */
 	public Spot getSpotAt(int i) {
+		if (i < 0) {
+			throw new IndexOutOfBoundsException("Index cannot be negative.");
+		} else if (occupancy.size() <= i) {
+			throw new IndexOutOfBoundsException("Index must be less than the occupancy list.");
+		}
+
 		return occupancy.get(i);
 	}
 
