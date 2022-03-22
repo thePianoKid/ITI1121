@@ -2,31 +2,31 @@ public class Cashier {
     private Queue<Customer> queue;
     private Customer currentCustomer;
     private int totalCustomerWaitTime;
-    private int customersServered;
-    private int totalItemsServered;
+    private int totalCustomersServed;
+    private int totalItemsServed;
 
     public Cashier() {
         queue = new ArrayQueue<Customer>();
         currentCustomer = null;
         totalCustomerWaitTime = 0;
-        customersServered = 0;
-        totalItemsServered = 0;
+        totalCustomersServed = 0;
+        totalItemsServed = 0;
     }
 
     public void serveCustomers(int currentTime) {
         if (currentCustomer == null) {
             if (!queue.isEmpty()) {
                 currentCustomer = queue.dequeue();
-                totalCustomerWaitTime = currentTime - currentCustomer.getArrivalTime();
+                totalCustomerWaitTime += currentTime - currentCustomer.getArrivalTime();
             }
-        }
-
-        if (currentCustomer.getNumberOfItems() <= 0) {
-            currentCustomer = null;
-            customersServered++;
         } else {
-            currentCustomer.serve();
-            totalItemsServered++;
+            if (currentCustomer.getNumberOfItems() <= 0) {
+                currentCustomer = null;
+                totalCustomersServed++;
+            } else {
+                currentCustomer.serve();
+                totalItemsServed++;
+            }
         }
     }
 
@@ -43,10 +43,18 @@ public class Cashier {
     }
 
     public int getTotalCustomersServed() {
-        return customersServered;
+        return totalCustomersServed;
     }
 
-    public int getTotalItemsServered() {
-        return totalItemsServered;
+    public int getTotalItemsServed() {
+        return totalItemsServed;
+    }
+
+    public String toString() {
+        String firstLine = "The total number of customers served is " + totalCustomersServed + "\n";
+        String secondLine = "The average number of items per customer was " + totalItemsServed/totalCustomersServed + "\n";
+        String thirdLine = "The average waiting time (in seconds) was " + totalCustomerWaitTime/totalCustomersServed + "\n";
+
+        return firstLine + secondLine + thirdLine;
     }
 }
