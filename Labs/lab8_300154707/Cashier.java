@@ -4,6 +4,8 @@ public class Cashier {
     private int totalCustomerWaitTime;
     private int totalCustomersServed;
     private int totalItemsServed;
+    private int numberOfItems; // items remaining to be processed
+    private int numberOfServedItems; // number of items that have been processed
 
     public Cashier() {
         queue = new ArrayQueue<Customer>();
@@ -18,6 +20,7 @@ public class Cashier {
             if (!queue.isEmpty()) {
                 currentCustomer = queue.dequeue();
                 totalCustomerWaitTime += currentTime - currentCustomer.getArrivalTime();
+                numberOfItems = currentCustomer.getNumberOfItems();
             }
         } else {
             if (currentCustomer.getNumberOfItems() <= 0) {
@@ -26,6 +29,8 @@ public class Cashier {
             } else {
                 currentCustomer.serve();
                 totalItemsServed++;
+                numberOfItems--;
+                numberOfServedItems++;
             }
         }
     }
@@ -48,6 +53,14 @@ public class Cashier {
 
     public int getTotalItemsServed() {
         return totalItemsServed;
+    }
+
+    public int getNumberOfItems() {
+        return numberOfItems;
+    }
+
+    public int getNumberOfServedItems() {
+        return numberOfServedItems;
     }
 
     public String toString() {
