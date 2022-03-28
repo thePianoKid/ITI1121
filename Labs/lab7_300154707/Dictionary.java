@@ -1,5 +1,4 @@
 import java.util.NoSuchElementException;
-import java.util.concurrent.locks.AbstractQueuedLongSynchronizer.ConditionObject;
 
 public class Dictionary implements Map<String, Integer> {
 
@@ -49,8 +48,6 @@ public class Dictionary implements Map<String, Integer> {
     public boolean contains(String key) {
         if (key == null) {
             throw new NullPointerException();
-        } else if (!contains(key)) {
-            throw new NoSuchElementException();
         }
 
         for (int i = 0; i < elems.length; i++) {
