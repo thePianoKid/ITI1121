@@ -1,5 +1,3 @@
-import javax.lang.model.util.SimpleElementVisitor14;
-
 public class SinglyLinkedList<E> implements List<E>{
     private static class Node<T> {
         private T value;
