@@ -1,19 +1,16 @@
 public class ITIStringBuffer {
 
+    private List<Character> buffer;
+
     public ITIStringBuffer() {
-        throw new UnsupportedOperationException( "replace with your implementation" );
+        buffer = new SinglyLinkedList<Character>();
     }
 
-    public ITIStringBuffer(String  firstString){
-        throw new UnsupportedOperationException( "replace with your implementation" );
+    public void append(String str) {
+        
     }
 
-    public void append(String nextString){
-        throw new UnsupportedOperationException( "replace with your implementation" );
+    public String toString() {
+        return "";
     }
-
-    public String toString(){
-        throw new UnsupportedOperationException( "replace with your implementation" );
-    }
-
 }
