@@ -30,7 +30,7 @@ public class BitList {
     public BitList( String s ) {
         char bit;
         
-        for (int i = s.toCharArray().length - 1; i >= 0; i--) {
+        for (int i = 0; i < s.toCharArray().length; i++) {
             bit = s.toCharArray()[i];
 
             if (bit == '0') {
