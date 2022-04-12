@@ -33,8 +33,6 @@ public class BitList {
         for (int i = s.toCharArray().length - 1; i >= 0; i--) {
             bit = s.toCharArray()[i];
 
-            System.out.println(bit);
-
             if (bit == '0') {
                 addFirst(0);
             } else if (bit == '1') {
